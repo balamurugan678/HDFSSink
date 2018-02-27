@@ -1,0 +1,7 @@
+# Created by .ignore support plugin (hsz.mobi)
+/derby.log
+/dependency-reduced-pom.xml
+/HDFSSink.iml
+/target/
+/.idea/
+/src/main/resources/hive-site.xml
