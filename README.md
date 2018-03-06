@@ -10,11 +10,13 @@
 ## Where are the configuration variables
 
 * The service is heavily configurable and below are the configuration parameters to run the job.
+* The file name we use here is spark_config.txt but it can be anything as long as it has been supplied to the spark submit job via spark.configFileLocation.
+* The source directory for the files, the sink HDFS location and the processed files directory are the config
+* They are delimited by ~ and a row in the file represents a table.
+* There could be multiple rows in the file and they can correspond to the multiple tables.
 
 ```
-spark.sourceDirectory
-spark.hiveTable
-spark.processedDirectory
+spark.sourceDirectory~spark.hdfsLocation~spark.processedDirectory
 ```
 
 
@@ -39,4 +41,4 @@ mvn clean install
 ```
 cd /****CODE_DIRECTORY/target****/
 
-spark-submit --class "com.maple.quad.HDFSToHive" --master local[4] --properties-file /***PATH_TO_THE_FILE***/spark-application.properties HDFS-Sink.jar
+spark-submit --class "com.maple.quad.HDFSToHive" --master local[4] --conf spark.configFileLocation=/***PATH_TO_THE_FILE***/spark_config.txt HDFS-Sink.jar
