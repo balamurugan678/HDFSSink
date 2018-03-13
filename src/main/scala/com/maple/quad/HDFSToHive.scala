@@ -34,7 +34,15 @@ object HDFSToHive {
 
           attunityAvroDataframe.printSchema()
 
-          val attunityDF = attunityAvroDataframe.select(columnNames.head, columnNames.tail: _*)
+          val attunityUpperDF = attunityAvroDataframe.select(columnNames.head, columnNames.tail: _*)
+            .withColumnRenamed("operation", "header__operation")
+            .withColumnRenamed("changeSequence", "header__changeSequence")
+            .withColumnRenamed("timestamp", "header__timestamp")
+            .withColumnRenamed("streamPosition", "header__streamPosition")
+            .withColumnRenamed("transactionId", "header__transactionId")
+
+          val attunityDF = attunityUpperDF.toDF(attunityUpperDF.columns map(_.toLowerCase): _*)
+
           attunityDF.show()
           attunityDF.write
             .mode("append")
